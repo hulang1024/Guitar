@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>指法位置转音名</title>
+  </head>
+  <body>
+    吉他指法位置（如1弦3品写作1-3）多个用逗号隔开:<br>
+    <textarea id="position" rows="2" cols="100" style="font-size: 1.4em"/></textarea>
+    <button id="convert">转换到音高</button>
+    <div id="output"></div>
+
+    <script src="g.js"></script>
+    <script>
+      document.getElementById('convert').onclick = function() {
+        var positionTextInput = document.getElementById('position');
+
+        var pss = positionTextInput.value;
+        var ret = pss.split(',').map(function(ps) {
+          ps = ps.split('-');
+          var position = new Position(+ps[0], +(ps[1] || 0));
+          var pitch = positionToPitch(position);
+          return pitch.toString();
+        });
+        document.getElementById('output').innerHTML = ret.join(', ');
+
+      }
+    </script>
+  </body>
+</html>
