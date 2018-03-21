@@ -57,8 +57,15 @@ class Pitch {
     return pitch;
   }
 
-  toString (letterName) {
-    var toneLetterNames = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+  /*
+  @param nameType 1=唱名,2=音名,3=数字
+  */
+  toString (nameType) {
+    var toneNames = {
+      1: ['do', 're', 'mi', 'fa', 'so', 'la', 'si'],
+      2: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+      3: [1, 2, 3, 4, 5, 6, 7]
+    };
     var str = '';
     if (this.sharpFlat) {
       str += (this.sharpFlat == 1 ? '#' : 'b');
@@ -76,7 +83,7 @@ class Pitch {
     } else {
       str += '中音';
     }
-    str += letterName ? toneLetterNames[this.step - 1] : this.step;
+    str += toneNames[nameType][this.step - 1];
 
     return '(' + str + ')';
   }

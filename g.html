@@ -7,6 +7,11 @@
   <body>
     吉他指法位置（如1弦3品写作1-3）多个用逗号隔开:<br>
     <textarea id="position" rows="2" cols="100" style="font-size: 1.4em"/></textarea>
+    <select id="toneNameType">
+      <option value="1">唱名</option>
+      <option value="2">音名</option>
+      <option value="3" selected>数字音名</option>
+    </select>
     <button id="convert">转换到音高</button>
     <div id="output"></div>
 
@@ -14,13 +19,13 @@
     <script>
       document.getElementById('convert').onclick = function() {
         var positionTextInput = document.getElementById('position');
-
+        var toneNameType = document.getElementById('toneNameType').value;
         var pss = positionTextInput.value;
         var ret = pss.split(',').map(function(ps) {
           ps = ps.split('-');
           var position = new Position(+ps[0], +(ps[1] || 0));
           var pitch = positionToPitch(position);
-          return pitch.toString();
+          return pitch.toString(toneNameType);
         });
         document.getElementById('output').innerHTML = ret.join(', ');
 
